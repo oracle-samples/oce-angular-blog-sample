@@ -1,0 +1,80 @@
+<!--
+  Copyright (c) 2021, Oracle and/or its affiliates.
+  Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/ 
+-->
+
+<!-- Render error -->
+<div *ngIf="error">
+  <div class="error">
+    <h2>Article Not Found</h2>
+    <i>Unable to view article details.</i>
+  </div>
+</div>
+
+<!-- Render loading -->
+<div *ngIf="loading && !error">
+  <div class="progress-spinner"></div>
+</div>
+
+<!-- Render data -->
+<div *ngIf="!loading && !error">
+
+  <!-- Breadcrumbs-->
+  <div id="breadcrumb">
+    <ul>
+      <li>
+        <!-- create a URL like: /topics
+             "app.modiule.ts" contains the Router which will route a URL of
+             this format to "TopicsListComponent"
+        -->
+        <a  [routerLink]="['/topics']">Home</a>
+      </li>
+      <li>
+        <!-- create a URL like: /articles/topicId&topicName=name
+             "app.modiule.ts" contains the Router which will route a URL of
+             this format to "ArticlesListComponent"
+        -->
+        <a  [routerLink]="['/articles', topicId]" [queryParams]="{ topicName: topicName}" >{{topicName}}</a>
+      </li>
+      <li>
+        {{articleName}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Details about the specific article-->
+  <div id="article">
+    <div class="author">
+      <!-- Avatar -->
+      <picture>
+        <source
+          type="image/webp"
+          srcset={{authorRenditionUrls.srcset}}
+          sizes="80px" />
+        <source srcset={{authorRenditionUrls.jpgSrcset}} sizes="80px" />
+        <img src={{authorRenditionUrls.small}} alt="Author Avatar" />
+      </picture>
+      <!-- Author Name / Date -->
+      <div class="name_date">
+        <h4 class="title">{{authorName}}</h4>
+        <div class="date">{{formattedDate}} </div>
+      </div>
+    </div>
+
+    <!-- Article Image and caption -->
+    <figure>
+      <picture>
+        <source type="image/webp" srcset={{renditionUrls.srcset}} />
+        <source srcset={{renditionUrls.jpgSrcset}} />
+        <img src={renditionUrls.large}} alt="Article"
+          width={{renditionUrls.width}}
+          height={{renditionUrls.height}}/>
+      </picture>
+      <figcaption>{{imageCaption}}</figcaption>
+    </figure>
+
+    <!-- Article Content -->
+    <div class="content" [innerHTML]="articleContents"></div>
+
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<!--
+  Copyright (c) 2021, Oracle and/or its affiliates.
+  Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/ 
+-->
+<!-- whole view is wrapped in a link tag which creates a URL like:
+      /articles/topicId?topicName=name
+      "app.modiule.ts" contains the Router which will route a URL of
+      this format to "ArticlesListComponent"
+-->
+<a
+  style="text-decoration: none;"
+  [routerLink]="['/articles', topic.id]"
+  [queryParams]="{ topicName: topic.name}">
+
+  <div class="topic" >
+    <div class="button-wrapper">
+      <div class="button">{{topic.name}}</div>
+    </div>
+
+    <picture>
+      <source type="image/webp" srcset={{topic.renditionUrls.srcset}} sizes="300px" />
+      <source srcset={{topic.renditionUrls.jpgSrcset}} sizes="300px" />
+      <img src={{topic.renditionUrls.thumbnail}} alt="Topic Thumbnail" />
+    </picture>
+
+    <div class="desc-wrapper">
+      <div class="description">{{topic.description}}</div>
+    </div>
+  </div>
+
+</a>

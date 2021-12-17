@@ -1,0 +1,47 @@
+<!--
+  Copyright (c) 2021, Oracle and/or its affiliates.
+  Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/ 
+-->
+<!-- Render error -->
+<div *ngIf="error">
+  <div class="error">
+    <h2>Topic Not Found</h2>
+    <i>Unable to list articles.</i>
+  </div>
+</div>
+
+<!-- Render loading -->
+<div *ngIf="loading && !error">
+  <div class="progress-spinner"></div>
+</div>
+
+<!-- Render data -->
+<div *ngIf="!loading && !error">
+  
+  <!-- Breadcrumbs-->
+  <div id="breadcrumb">
+    <ul>        
+      <li>
+        <!-- create a URL like: /topics
+             "app.modiule.ts" contains the Router which will route a URL of 
+             this format to "TopicsListComponent"
+        -->
+        <a  [routerLink]="['/topics']">Home</a>                
+      </li>    
+      <li>
+        {{topicName}}
+      </li>
+    </ul>
+  </div>
+  
+  <!-- List of articles for the specific topic -->
+  <div id="articles">
+    <div *ngFor="let article of articles">
+      <app-article-list-item 
+        [article]=article
+        [topicId]=topicId
+        [topicName]=topicName>
+      </app-article-list-item>
+    </div >    
+  </div>
+</div>
