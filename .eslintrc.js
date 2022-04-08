@@ -57,6 +57,7 @@ module.exports = {
   // rules for all files (*.ts are overritten below)
   //
   rules: {
+    'linebreak-style': 0,
     // our own rules
     'no-empty-function': ['error', { allow: ['constructors'] }],
     '@typescript-eslint/naming-convention': 'warn',
@@ -107,6 +108,7 @@ module.exports = {
       plugins: ['@typescript-eslint'],
 
       rules: {
+        'linebreak-style': 0,
         'no-unused-vars': ['error', { vars: 'all', args: 'none', ignoreRestSiblings: true }],
         'no-useless-constructor': 'off',
 

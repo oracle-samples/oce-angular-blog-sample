@@ -16,8 +16,8 @@ import * as http from 'http';
 import * as https from 'https';
 import { existsSync } from 'fs';
 import { HttpOptions } from './src/interfaces/interfaces';
-import { getAuthValue, isAuthNeeded } from './src/scripts/server-config-utils';
 import { AppServerModule } from './src/main.server';
+import getClient from './src/scripts/server-config-utils';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -95,13 +95,10 @@ export function app() {
    * - 'src/scripts/utils.getImageUrl' for the code proxying requests for image binaries
    */
   server.use('/content/', (req, res) => {
-    if (isAuthNeeded()) {
-      getAuthValue().then((authValue) => {
-        handleContentRequest(req, res, authValue);
-      });
-    } else {
-      handleContentRequest(req, res, '');
-    }
+    const client = getClient();
+    client.getToken().then((authValue) => {
+      handleContentRequest(req, res, authValue);
+    });
   });
 
   // Serve static files from the dist folder
