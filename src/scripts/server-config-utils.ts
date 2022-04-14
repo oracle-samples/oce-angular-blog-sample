@@ -52,13 +52,23 @@ export default function getClient() {
       ? `${window.location.origin}/`
       : process.env.SERVER_URL;
 
+    let authParams = null;
+    if (process.env.AUTH_PARAMS) {
+      authParams = {};
+      const oauthParamsParsed = JSON.parse(process.env.AUTH_PARAMS);
+      authParams.clientId = oauthParamsParsed.CLIENT_ID;
+      authParams.clientSecret = oauthParamsParsed.CLIENT_SECRET;
+      authParams.clientScopeUrl = oauthParamsParsed.CLIENT_SCOPE_URL;
+      authParams.idpUrl = oauthParamsParsed.IDP_URL;
+    }
+
     const serverconfig = {
       contentServer: serverURL,
       contentVersion: process.env.API_VERSION,
       channelToken: process.env.CHANNEL_TOKEN,
       options: process.env.OPTIONS ? JSON.parse(process.env.OPTIONS) : null,
       authorization: process.env.AUTH,
-      authorizationParams: process.env.AUTH_PARAMS ? JSON.parse(process.env.AUTH_PARAMS) : null,
+      authorizationParams: authParams,
     };
 
     // Add the following if you want logging from the Oracle Content SDK shown in the console

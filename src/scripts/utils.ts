@@ -35,7 +35,8 @@ export function getImageUrl(originalUrl) {
   if (process.env.AUTH || process.env.AUTH_PARAMS) {
     // strip off the server URL from the front of the URL to make a relative URL
     // causing the request to go to this application's Express server
-    return originalUrl.replace(process.env.SERVER_URL, '');
+    const url = new URL(originalUrl);
+    return url.pathname + url.search;
   }
   return originalUrl;
 }

@@ -96,7 +96,7 @@ export function app() {
    */
   server.use('/content/', (req, res) => {
     const client = getClient();
-    client.getToken().then((authValue) => {
+    client.getAuthorizationHeaderValue().then((authValue) => {
       handleContentRequest(req, res, authValue);
     });
   });
